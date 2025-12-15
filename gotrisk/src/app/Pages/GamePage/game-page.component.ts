@@ -3,6 +3,12 @@ import { FormsModule } from '@angular/forms';
 
 import { PlayerSelect } from '../../Components/PlayerSelect/player-select.component'
 
+
+interface PlayerInfo {
+  name: string,
+  faction: string
+}
+
 @Component({
   selector: 'game-page',
   imports: [PlayerSelect, FormsModule],
@@ -20,10 +26,10 @@ export class GamePage {
     'Tyrell'
   ];
   private currentSelections: Set<string>;
-  private indexToFaction: Map<number, string>;
+  private playerList: Array<PlayerInfo>;
   constructor() {
     this.currentSelections = new Set();
-    this.indexToFaction = new Map<number, string>();
+    this.playerList = [{ name: '', faction: ''}];
   }
 
   computeRange(n: number) {
@@ -32,12 +38,19 @@ export class GamePage {
 
   handlePlayerCountChange() {
     if (this.playerCount < this.prevPlayerCount) {
-      for (let i: number = Number(this.playerCount) + 1; i <= this.prevPlayerCount; i++) {
-        const selection = this.indexToFaction.get(i);
+      for (let i: number = Number(this.prevPlayerCount) - 1; i >= this.playerCount; i--) {
+        const selection = this.playerList.pop()?.faction;
         if (selection) {
           this.currentSelections.delete(selection)
-          this.indexToFaction.delete(i);
         };
+      }
+      this.playerList.slice(0, this.playerCount);
+    } else {
+      for (let i: number = Number(this.prevPlayerCount); i < Number(this.playerCount); i++) {
+        this.playerList.push({
+          name: '',
+          faction: ''
+        })
       }
     }
     this.prevPlayerCount = this.playerCount;
@@ -46,7 +59,7 @@ export class GamePage {
   onSelect = (playerNumber: number, prevSelection: string, newSelection: string) => {
     if (prevSelection) this.currentSelections.delete(prevSelection);
     this.currentSelections.add(newSelection);
-    this.indexToFaction.set(playerNumber, newSelection);
+    this.playerList[playerNumber - 1].faction = newSelection;
   }
 
   filterChoices = (current: string, choices: string[]) => {

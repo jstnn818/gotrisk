@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -13,6 +13,9 @@ export class PlayerSelect {
   @Input({ required: false }) onSelect: (playerNumber: number, prevSelection: string, newSelection: string) => void = (playerNumber, prevSelection, newSelection) => {};
   @Input({ required: false }) filterChoices: (current: string, choices: string[]) => string[] = (current, choices) => {return choices};
 
+  @Output() selectFactionEvent = new EventEmitter<string>();
+  @Output() selectNameEvent = new EventEmitter<string>();
+
   public prevPlayerFaction = '';
   public playerFaction = '';
   public playerName = '';
@@ -20,6 +23,7 @@ export class PlayerSelect {
   handleFactionChange() {
     this.onSelect(this.playerNumber, this.prevPlayerFaction, this.playerFaction);
     this.prevPlayerFaction = this.playerFaction;
+    this.selectFactionEvent.emit(this.playerFaction);
   }
 
   retrieveSelections() {
