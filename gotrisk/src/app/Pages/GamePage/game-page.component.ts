@@ -62,6 +62,10 @@ export class GamePage {
     this.playerList[playerNumber - 1].faction = newSelection;
   }
 
+  handlePlayerNameChange(playerInfo: {name: string, number: number}) {
+    this.playerList[playerInfo.number - 1].name = playerInfo.name;
+  }
+
   filterChoices = (current: string, choices: string[]) => {
     return choices.filter((choice) => !this.currentSelections.has(choice) || choice === current);
   }

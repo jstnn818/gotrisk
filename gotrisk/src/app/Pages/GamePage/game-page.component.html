@@ -13,6 +13,6 @@
   <br>
   <h3> Player List </h3>
   @for (n of computeRange(playerCount); track n) {
-    <player-select [playerNumber]="n" [factions]="factions" [onSelect]="onSelect" [filterChoices]="filterChoices"></player-select>
+    <player-select [playerNumber]="n" [factions]="factions" [onSelect]="onSelect" [filterChoices]="filterChoices" (selectNameEvent)="handlePlayerNameChange($event)"></player-select>
   }
 </div>

@@ -1,7 +1,7 @@
 <h4> Player {{ playerNumber }}</h4>
 <div class="player-select-container">
   <div class="player-select-column"> Name: 
-    <input type="text" [(ngModel)]="playerName" name="nameInput">
+    <input type="text" [(ngModel)]="playerName" name="nameInput" (ngModelChange)="handlePlayerNameChange()">
   </div>
   <div class="player-select-column"> 
     Faction: 
