@@ -1,4 +1,18 @@
 <div>
   <h2>Let's Create a Game</h2>
   <h3>Choose the number of players: </h3>
+  <label for="playerCountSelection">Select a number between 1 and 10:</label>
+  <br>
+  <select id="playerCountSelection" [(ngModel)]="playerCount" name="playerCount" (ngModelChange)="handlePlayerCountChange()">
+    @for (n of computeRange(10); track n) {
+    <option [value]="n">
+      {{ n }}
+    </option>
+    }
+  </select>
+  <br>
+  <h3> Player List </h3>
+  @for (n of computeRange(playerCount); track n) {
+    <player-select [playerNumber]="n" [factions]="factions" [onSelect]="onSelect" [filterChoices]="filterChoices"></player-select>
+  }
 </div>

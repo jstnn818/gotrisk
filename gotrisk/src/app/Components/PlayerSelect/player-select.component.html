@@ -1,0 +1,14 @@
+<h4> Player {{ playerNumber }}</h4>
+<div class="player-select-container">
+  <div class="player-select-column"> Name: 
+    <input type="text" [(ngModel)]="playerName" name="nameInput">
+  </div>
+  <div class="player-select-column"> 
+    Faction: 
+    <select id="factionSelection" [(ngModel)]="playerFaction" name="factionSelection" (ngModelChange)="handleFactionChange()">
+      @for (faction of retrieveSelections(); track faction) {
+        <option [value]="faction" [disabled]="faction === playerFaction"> {{ faction }}</option>
+      }
+    </select>
+  </div>
+</div>
